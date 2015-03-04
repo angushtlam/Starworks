@@ -35,7 +35,7 @@ public class Assets {
 
 		FIREWORK_HEAD = getTexture(Gdx.files.internal("game/firework/head.png"));
 		FIREWORK_TRAIL = getTexture(Gdx.files.internal("game/firework/trail.png"));
-		FIREWORK_BLOOM = getTexture(Gdx.files.internal("game/firework/bloom.png"));
+		FIREWORK_BLOOM = getTexture(Gdx.files.internal("game/firework/bloom_new.png"));
 		
 		UI_LIFE_ALIVE = getTexture(Gdx.files.internal("game/ui/life/alive.png"));
 		UI_LIFE_DEAD = getTexture(Gdx.files.internal("game/ui/life/dead.png"));

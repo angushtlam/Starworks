@@ -1,5 +1,6 @@
 package me.embarker.starworks.screen.game;
 
+import me.embarker.starworks.game.GameTracker;
 import me.embarker.starworks.game.Player;
 import me.embarker.starworks.render.StarManager;
 import me.embarker.starworks.render.TerrainManager;
@@ -121,9 +122,8 @@ public class GameRenderer {
 								public void run() {
 									TerrainManager.gen();
 									StarManager.clear();
-									
-									// Randomize terrain
-									Player.startNewGame();
+									GameTracker.startNewGame();
+									Player.resetScore();
 								}
 		    				}),
 		    				Actions.fadeIn(1F)));

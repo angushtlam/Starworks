@@ -3,6 +3,7 @@ package me.embarker.starworks.screen.game;
 import java.util.Random;
 
 import me.embarker.starworks.game.Firework;
+import me.embarker.starworks.game.GameTracker;
 import me.embarker.starworks.game.Player;
 import me.embarker.starworks.render.StarManager;
 import me.embarker.starworks.render.TerrainManager;
@@ -16,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 public class GameLogic {
 	private float deltaCounter = 0F;
-	private float timeSinceStart = 0F;
 	
 	private static Random rand = new Random();
 	
@@ -30,6 +30,8 @@ public class GameLogic {
 	public Label lblScore;
 	public Label lblHighScore;
 	public Label lblLives;
+	
+	public int changeRateAtScore = Player.FIREWORK_CHANGE_RATE_INCREMENT;
 	
 	public GameLogic() {
 		bg = new Image(Assets.GAME_BG);
@@ -59,7 +61,6 @@ public class GameLogic {
 	
 	public void update(float delta) {
 		deltaCounter = deltaCounter + delta;
-		timeSinceStart = timeSinceStart + delta;
 		
 		if (!Player.HIGH_SCORE_SAVED && Player.LIVES == 0) {
 			Player.HIGH_SCORE_SAVED = true;
@@ -80,22 +81,29 @@ public class GameLogic {
 			lblLives.setText("" + Player.LIVES);
 		}
 		
-		if (timeSinceStart > 1.0F) {
-			timeSinceStart = timeSinceStart - 1.0F;
+		if (Player.LIVES == 0 && changeRateAtScore != Player.FIREWORK_CHANGE_RATE_INCREMENT) {
+			changeRateAtScore = Player.FIREWORK_CHANGE_RATE_INCREMENT;
+		}
+		
+		if (Player.SCORE == changeRateAtScore) {
+			GameTracker.SPEEDUP_FIREWORK_LABEL = true;
 			
-			Player.FIREWORK_SPAWN_MODIFIER = Player.FIREWORK_SPAWN_MODIFIER + Player.FIREWORK_SPAWN_INCREASE_RATE;
-			Player.FIREWORK_SPEED_MODIFIER = Player.FIREWORK_SPEED_MODIFIER + Player.FIREWORK_SPEED_INCREASE_RATE;
+			GameTracker.FIREWORK_SPAWN_MODIFIER = GameTracker.FIREWORK_SPAWN_MODIFIER + Player.FIREWORK_SPAWN_INCREASE_RATE;
+			GameTracker.FIREWORK_SPEED_MODIFIER = GameTracker.FIREWORK_SPEED_MODIFIER + Player.FIREWORK_SPEED_INCREASE_RATE;
+			changeRateAtScore = changeRateAtScore + Player.FIREWORK_CHANGE_RATE_INCREMENT;
 		}
 		
 		if (Player.LIVES > 0) {
-			float rate = Firework.FIREWORK_INTERVAL_IN_SEC / Player.FIREWORK_SPAWN_MODIFIER;
+			float rate = Firework.FIREWORK_INTERVAL_IN_SEC / GameTracker.FIREWORK_SPAWN_MODIFIER;
 			if (deltaCounter > rate) {
 				deltaCounter = 0; // Cheap workaround to prevent stacked spawning. May lead to inaccuracy in spawning
 				
-				int padding = ((Resolution.GAME_WIDTH_CURRENT - Resolution.GAME_WIDTH_16_9) / 2) + 15;
+				int padding = ((Resolution.GAME_WIDTH_CURRENT - Resolution.GAME_WIDTH_16_9) / 2) + 30;
 				groupFireworks.addActor(new Firework(rand.nextInt(Resolution.GAME_WIDTH_CURRENT - padding * 2) + padding));
 			}
 		}
+		
+		
 	}
 	
 }

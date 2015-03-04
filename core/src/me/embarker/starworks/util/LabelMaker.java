@@ -20,6 +20,12 @@ public class LabelMaker {
 		label.setPosition(x, y);
 	}
 	
+	public LabelMaker(String str, float scale, int x, int y) {
+		label = new Label(str, Assets.SKIN);
+		label.setFontScale(scale);
+		label.setPosition(x, y);
+	}
+	
 	public LabelMaker(String str, boolean centered, int y) {
 		label = new Label(str, Assets.SKIN);
 		label.setPosition(centered ? (Resolution.GAME_WIDTH_CURRENT / 2) - label.getTextBounds().width : 0, y);

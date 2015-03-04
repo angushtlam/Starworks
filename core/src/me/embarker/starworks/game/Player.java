@@ -10,23 +10,19 @@ public class Player {
 	public static int SCORE = 0;
 	public static int HIGH_SCORE = 0;
 	public static boolean HIGH_SCORE_SAVED = false;
-	
-	public static float FIREWORK_SPEED_MODIFIER = 1.0F; // Speed multiplier for the firework
-	public static float FIREWORK_SPAWN_MODIFIER = 1.0F; // Spawn rate multiplier for the firework.
 
-	public static float FIREWORK_SPAWN_INCREASE_RATE = 0.085F; // Amount increased for firework spawn rates every second.
-	public static float FIREWORK_SPEED_INCREASE_RATE = 0.07F; // Speed increased for fireworks every second.
+	public static float FIREWORK_SPAWN_INCREASE_RATE = 0.35F; // Amount increased for firework spawn rates every second.
+	public static float FIREWORK_SPEED_INCREASE_RATE = 0.2F; // Speed increased for fireworks every second.
+	public static int FIREWORK_CHANGE_RATE_INCREMENT = 15; // Score needed to add difficulty.
 	
 	public static void init() {
 		pref = Gdx.app.getPreferences("starworks-player");
 		update();
 	}
 	
-	public static void startNewGame() {
+	public static void resetScore() {
 		LIVES = 3;
 		SCORE = 0;
-		FIREWORK_SPEED_MODIFIER = 1.0F;
-		FIREWORK_SPAWN_MODIFIER = 1.0F;
 		
 	}
 	
