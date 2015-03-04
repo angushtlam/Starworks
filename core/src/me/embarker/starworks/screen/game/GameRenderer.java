@@ -5,6 +5,7 @@ import me.embarker.starworks.render.StarManager;
 import me.embarker.starworks.render.TerrainManager;
 import me.embarker.starworks.util.Assets;
 import me.embarker.starworks.util.ImageMaker;
+import me.embarker.starworks.util.LabelMaker;
 import me.embarker.starworks.util.Resolution;
 
 import com.badlogic.gdx.Gdx;
@@ -58,12 +59,20 @@ public class GameRenderer {
 		// Render Stats
 		Table tableStat = new Table();
 		tableStat.setFillParent(true);
-		//table.setDebug(true);
+		//tableStat.setDebug(true);
 		
 		Table tableInfo = new Table();
+		tableInfo.setDebug(true);
+		tableInfo.add(new LabelMaker("High Score", 0.5F).getLabel()).expandX().padLeft(20);
+		tableInfo.add(new LabelMaker("").getLabel()).expandX().padLeft(20).padRight(20);
+		tableInfo.add(new LabelMaker("Lives", 0.5F).getLabel()).expandX().padRight(20);
+		
+		tableInfo.row();
+		
 		//tableInfo.setDebug(true);
-		tableInfo.add(logic.lblScore).expandX().padLeft(100);
-		tableInfo.add(logic.lblLives).width(60).padRight(20);
+		tableInfo.add(logic.lblHighScore).width(80).expandX().padLeft(20);
+		tableInfo.add(logic.lblScore).width(200).expandX().padLeft(20).padRight(20);
+		tableInfo.add(logic.lblLives).width(80).expandX().padRight(20);
 		tableStat.add(tableInfo).expandX().fill().padTop(10);
 		
 		tableStat.top();

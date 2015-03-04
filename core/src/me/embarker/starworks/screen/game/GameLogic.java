@@ -28,6 +28,7 @@ public class GameLogic {
 	public Group groupUi;
 
 	public Label lblScore;
+	public Label lblHighScore;
 	public Label lblLives;
 	
 	public GameLogic() {
@@ -45,11 +46,14 @@ public class GameLogic {
 		groupFireworks = new Group();
 		
 		lblScore = new Label("-", Assets.SKIN);
-		lblScore.setFontScale(1.5F);
+		lblScore.setFontScale(2.5F);
 		lblScore.setAlignment(Align.center);
 		
 		lblLives = new Label("3", Assets.SKIN);
 		lblLives.setAlignment(Align.center);
+		
+		lblHighScore = new Label("0", Assets.SKIN);
+		lblHighScore.setAlignment(Align.center);
 		
 	}
 	
@@ -63,6 +67,11 @@ public class GameLogic {
 		
 		if (Player.LIVES >= 0 && !lblLives.getText().equals(Player.LIVES)) {
 			lblLives.setText("" + Player.LIVES);
+			
+			if (Player.HIGH_SCORE < Player.SCORE) {
+				Player.HIGH_SCORE = Player.SCORE;
+				lblHighScore.setText("" + Player.HIGH_SCORE);
+			}
 		}
 		
 		if (timeSinceStart > 1.0F) {
