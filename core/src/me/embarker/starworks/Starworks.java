@@ -1,6 +1,7 @@
 package me.embarker.starworks;
 
 import me.embarker.starworks.game.FireworkRender;
+import me.embarker.starworks.game.Player;
 import me.embarker.starworks.screen.game.GameScreen;
 import me.embarker.starworks.util.Assets;
 
@@ -16,6 +17,7 @@ public class Starworks extends Game {
 		// Create game objects on start.
 		Assets.init();
 		FireworkRender.init();
+		Player.init();
 		
 		// Set first screen.
 		this.setScreen(new GameScreen());

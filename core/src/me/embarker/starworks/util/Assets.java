@@ -12,8 +12,9 @@ public class Assets {
 	
 	public static Texture GAME_STAR_1, GAME_STAR_2, GAME_STAR_3, GAME_STAR_4, GAME_STAR_5, GAME_STAR_FRAG;
 
-	public static Texture FIREWORK_HEAD_1;
-	public static Texture FIREWORK_TRAIL_1;
+	public static Texture FIREWORK_HEAD;
+	public static Texture FIREWORK_TRAIL;
+	public static Texture FIREWORK_BLOOM;
 	
 	public static Texture UI_LIFE_ALIVE, UI_LIFE_DEAD;
 	
@@ -32,8 +33,9 @@ public class Assets {
 		GAME_STAR_5 = getTexture(Gdx.files.internal("game/star/5.png"));
 		GAME_STAR_FRAG = getTexture(Gdx.files.internal("game/star/fragment.png"));
 
-		FIREWORK_HEAD_1 = getTexture(Gdx.files.internal("game/firework/head/1.png"));
-		FIREWORK_TRAIL_1 = getTexture(Gdx.files.internal("game/firework/trail/1.png"));
+		FIREWORK_HEAD = getTexture(Gdx.files.internal("game/firework/head.png"));
+		FIREWORK_TRAIL = getTexture(Gdx.files.internal("game/firework/trail.png"));
+		FIREWORK_BLOOM = getTexture(Gdx.files.internal("game/firework/bloom.png"));
 		
 		UI_LIFE_ALIVE = getTexture(Gdx.files.internal("game/ui/life/alive.png"));
 		UI_LIFE_DEAD = getTexture(Gdx.files.internal("game/ui/life/dead.png"));

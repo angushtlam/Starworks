@@ -33,14 +33,14 @@ public class GameLogic {
 	
 	public GameLogic() {
 		bg = new Image(Assets.GAME_BG);
-		bg.setColor(0.05F, 0.5F, 0.8F, 0.8F);
+		bg.setColor(0.05F, 0.55F, 0.8F, 0.8F);
 		
 		groupTerrain = new Group();
 		TerrainManager.setGroup(groupTerrain);
-		TerrainManager.gen(40);
+		TerrainManager.gen();
 		
 		groupStars = new Group();
-		groupStars.setColor(0.75F, 0.75F, 1, 0.6F);
+		groupStars.setColor(0.75F, 0.75F, 1, 0.3F);
 		StarManager.setGroup(groupStars);
 		
 		groupFireworks = new Group();
@@ -52,7 +52,7 @@ public class GameLogic {
 		lblLives = new Label("3", Assets.SKIN);
 		lblLives.setAlignment(Align.center);
 		
-		lblHighScore = new Label("0", Assets.SKIN);
+		lblHighScore = new Label(Player.HIGH_SCORE + "", Assets.SKIN);
 		lblHighScore.setAlignment(Align.center);
 		
 	}
@@ -61,17 +61,23 @@ public class GameLogic {
 		deltaCounter = deltaCounter + delta;
 		timeSinceStart = timeSinceStart + delta;
 		
+		if (!Player.HIGH_SCORE_SAVED && Player.LIVES == 0) {
+			Player.HIGH_SCORE_SAVED = true;
+			Player.save();
+		}
+		
 		if (!lblScore.getText().equals(Player.SCORE)) {
 			lblScore.setText("" + Player.SCORE);
+			
+			if (Player.HIGH_SCORE < Player.SCORE) {
+				Player.HIGH_SCORE_SAVED = false;
+				Player.HIGH_SCORE = Player.SCORE;
+				lblHighScore.setText("" + Player.HIGH_SCORE);
+			}
 		}
 		
 		if (Player.LIVES >= 0 && !lblLives.getText().equals(Player.LIVES)) {
 			lblLives.setText("" + Player.LIVES);
-			
-			if (Player.HIGH_SCORE < Player.SCORE) {
-				Player.HIGH_SCORE = Player.SCORE;
-				lblHighScore.setText("" + Player.HIGH_SCORE);
-			}
 		}
 		
 		if (timeSinceStart > 1.0F) {
@@ -86,7 +92,7 @@ public class GameLogic {
 			if (deltaCounter > rate) {
 				deltaCounter = 0; // Cheap workaround to prevent stacked spawning. May lead to inaccuracy in spawning
 				
-				int padding = 15;
+				int padding = ((Resolution.GAME_WIDTH_CURRENT - Resolution.GAME_WIDTH_16_9) / 2) + 15;
 				groupFireworks.addActor(new Firework(rand.nextInt(Resolution.GAME_WIDTH_CURRENT - padding * 2) + padding));
 			}
 		}

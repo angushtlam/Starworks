@@ -62,11 +62,11 @@ public class GameRenderer {
 		//tableStat.setDebug(true);
 		
 		Table tableInfo = new Table();
-		tableInfo.setDebug(true);
-		tableInfo.add(new LabelMaker("High Score", 0.5F).getLabel()).expandX().padLeft(20);
+		//tableInfo.setDebug(true);
+		tableInfo.add(new LabelMaker("HIGH SCORE", 0.5F).getLabel()).expandX().padLeft(20);
 		tableInfo.add(new LabelMaker("").getLabel()).expandX().padLeft(20).padRight(20);
-		tableInfo.add(new LabelMaker("Lives", 0.5F).getLabel()).expandX().padRight(20);
-		
+		tableInfo.add(new LabelMaker("LIVES", 0.5F).getLabel()).expandX().padRight(20);
+		tableInfo.setColor(1F, 1F, 1F, 0.7F); // Change opacity of info
 		tableInfo.row();
 		
 		//tableInfo.setDebug(true);
@@ -119,10 +119,11 @@ public class GameRenderer {
 		    				Actions.run(new Runnable() {
 								@Override
 								public void run() {
+									TerrainManager.gen();
+									StarManager.clear();
+									
 									// Randomize terrain
 									Player.startNewGame();
-									TerrainManager.gen(40);
-									StarManager.clear();
 								}
 		    				}),
 		    				Actions.fadeIn(1F)));

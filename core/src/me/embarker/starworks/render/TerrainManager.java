@@ -13,8 +13,10 @@ public class TerrainManager {
 	private static Group group;
 	private static Random rand = new Random();
 	
-	public static void gen(int renderAmt) {
+	public static void gen() {
 		group.clear();
+		
+		int renderAmt = 40;
 		
 		ArrayList<Integer> randomRender = new ArrayList<Integer>();
 		for (int i = 0; i < renderAmt; i++) {

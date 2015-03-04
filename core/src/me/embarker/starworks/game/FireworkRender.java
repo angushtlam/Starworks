@@ -12,7 +12,7 @@ public class FireworkRender {
 	private static ArrayList<Texture> fireworkTrail = new ArrayList<Texture>();
 	
 	public static void init() {
-		fireworkTrail.add(Assets.FIREWORK_TRAIL_1);
+		fireworkTrail.add(Assets.FIREWORK_TRAIL);
 	}
 	
 	public static Texture getRandomTrail() {
