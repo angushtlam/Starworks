@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class Assets {
 	public static Texture GAME_BG, GAME_ATMOS;
+	
 	public static Texture GAME_BLD_1;
 	
 	public static Texture GAME_STAR_1, GAME_STAR_2, GAME_STAR_3, GAME_STAR_4, GAME_STAR_5, GAME_STAR_FRAG;
@@ -16,6 +17,7 @@ public class Assets {
 	public static Texture FIREWORK_TRAIL;
 	public static Texture FIREWORK_BLOOM;
 	
+	public static Texture UI_START;
 	public static Texture UI_LIFE_ALIVE, UI_LIFE_DEAD;
 	
 	public static Skin SKIN;
@@ -36,7 +38,8 @@ public class Assets {
 		FIREWORK_HEAD = getTexture(Gdx.files.internal("game/firework/head.png"));
 		FIREWORK_TRAIL = getTexture(Gdx.files.internal("game/firework/trail.png"));
 		FIREWORK_BLOOM = getTexture(Gdx.files.internal("game/firework/bloom_new.png"));
-		
+
+		UI_START = getTexture(Gdx.files.internal("game/ui/logo.png"));
 		UI_LIFE_ALIVE = getTexture(Gdx.files.internal("game/ui/life/alive.png"));
 		UI_LIFE_DEAD = getTexture(Gdx.files.internal("game/ui/life/dead.png"));
 		

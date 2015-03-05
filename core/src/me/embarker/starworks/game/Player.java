@@ -11,8 +11,8 @@ public class Player {
 	public static int HIGH_SCORE = 0;
 	public static boolean HIGH_SCORE_SAVED = false;
 
-	public static float FIREWORK_SPAWN_INCREASE_RATE = 0.35F; // Amount increased for firework spawn rates every second.
-	public static float FIREWORK_SPEED_INCREASE_RATE = 0.2F; // Speed increased for fireworks every second.
+	public static float FIREWORK_SPAWN_INCREASE_RATE = 0.325F; // Amount increased for firework spawn rates every second.
+	public static float FIREWORK_SPEED_INCREASE_RATE = 0.125F; // Speed increased for fireworks every second.
 	public static int FIREWORK_CHANGE_RATE_INCREMENT = 15; // Score needed to add difficulty.
 	
 	public static void init() {

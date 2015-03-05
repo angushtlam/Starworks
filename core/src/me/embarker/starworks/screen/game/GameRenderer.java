@@ -1,31 +1,20 @@
 package me.embarker.starworks.screen.game;
 
-import me.embarker.starworks.game.GameTracker;
-import me.embarker.starworks.game.Player;
-import me.embarker.starworks.render.StarManager;
-import me.embarker.starworks.render.TerrainManager;
 import me.embarker.starworks.util.Assets;
 import me.embarker.starworks.util.ImageMaker;
 import me.embarker.starworks.util.LabelMaker;
 import me.embarker.starworks.util.Resolution;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameRenderer {
 	private Viewport viewport;
 	public Stage stage;
-
-	private TextButton btnNewGame;
 	
 	public GameRenderer(GameLogic logic) {
 		viewport = new ExtendViewport(
@@ -41,9 +30,6 @@ public class GameRenderer {
 		stage.addActor(new ImageMaker(Assets.GAME_ATMOS, 0, 0).getImage());
 		stage.addActor(logic.groupTerrain);
 		
-		makeUi();
-		addUiActions();
-		
 		// Render UI
 		Table tableUI = new Table();
 		tableUI.setFillParent(true);
@@ -51,10 +37,9 @@ public class GameRenderer {
 		
 		Table tableBtn = new Table();
 		//tableBtn.setDebug(true);
-		tableBtn.add(btnNewGame).width(160);
-		tableUI.add(tableBtn).expandX().padBottom(10);
+		tableBtn.add(logic.btnStart);
+		tableUI.add(tableBtn).expandX().padBottom(50);
 		
-		tableUI.bottom();
 		stage.addActor(tableUI);
 		
 		// Render Stats
@@ -98,40 +83,6 @@ public class GameRenderer {
 		viewport.update(width, height, true);
 		
 		Resolution.GAME_WIDTH_CURRENT = (int) viewport.getCamera().viewportWidth;
-	}
-	
-	private void makeUi() {
-		btnNewGame = new TextButton("New Game", Assets.SKIN);
-		btnNewGame.getLabel().setColor(Color.WHITE);
-		
-	}
-	
-	private void addUiActions() {
-		InputListener lsnNewGame = new InputListener() {
-		    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-		        return true;
-		    }
-
-		    public void touchUp(InputEvent evt, float x, float y, int pointer, int button) {
-		    	// Make sure the cursor is still within the button.
-		    	if (x > 0 && x < btnNewGame.getWidth() && y > 0 && y < btnNewGame.getHeight()) {
-		    		stage.getRoot().addAction(Actions.sequence(
-		    				Actions.fadeOut(1F),
-		    				Actions.run(new Runnable() {
-								@Override
-								public void run() {
-									TerrainManager.gen();
-									StarManager.clear();
-									GameTracker.startNewGame();
-									Player.resetScore();
-								}
-		    				}),
-		    				Actions.fadeIn(1F)));
-		    	}
-		    }
-		};
-		
-		btnNewGame.addListener(lsnNewGame);
 	}
 
 }

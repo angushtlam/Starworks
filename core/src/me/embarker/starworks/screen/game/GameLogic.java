@@ -10,10 +10,17 @@ import me.embarker.starworks.render.TerrainManager;
 import me.embarker.starworks.util.Assets;
 import me.embarker.starworks.util.Resolution;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class GameLogic {
 	private float deltaCounter = 0F;
@@ -31,9 +38,11 @@ public class GameLogic {
 	public Label lblHighScore;
 	public Label lblLives;
 	
+	public ImageButton btnStart;
+	
 	public int changeRateAtScore = Player.FIREWORK_CHANGE_RATE_INCREMENT;
 	
-	public GameLogic() {
+	public GameLogic() {	
 		bg = new Image(Assets.GAME_BG);
 		bg.setColor(0.05F, 0.55F, 0.8F, 0.8F);
 		
@@ -57,6 +66,41 @@ public class GameLogic {
 		lblHighScore = new Label(Player.HIGH_SCORE + "", Assets.SKIN);
 		lblHighScore.setAlignment(Align.center);
 		
+		btnStart = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.UI_START)));
+		InputListener lsnNewGame = new InputListener() {
+		    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+		        return true;
+		    }
+
+		    public void touchUp(InputEvent evt, float x, float y, int pointer, int button) {
+		    	// Make sure the cursor is still within the button.
+		    	if (x > 0 && x < btnStart.getWidth() && y > 0 && y < btnStart.getHeight()) {
+		    		btnStart.getParent().getParent().getParent().addAction(Actions.sequence(
+		    				Actions.fadeOut(1F),
+		    				Actions.run(new Runnable() {
+								@Override
+								public void run() {
+									TerrainManager.gen();
+									StarManager.clear();
+									GameTracker.startNewGame();
+									Player.resetScore();
+								}
+		    				}),
+		    				Actions.fadeIn(1F)));
+
+		    		final Actor a = evt.getListenerActor();
+		    		a.addAction(Actions.sequence(
+		    				Actions.fadeOut(1F),
+		    				Actions.run(new Runnable() {
+								@Override
+								public void run() {
+									a.setVisible(false);
+								}
+		    				})));
+		    	}
+		    }
+		};
+		btnStart.addListener(lsnNewGame);
 	}
 	
 	public void update(float delta) {
@@ -81,9 +125,29 @@ public class GameLogic {
 			lblLives.setText("" + Player.LIVES);
 		}
 		
-		if (Player.LIVES == 0 && changeRateAtScore != Player.FIREWORK_CHANGE_RATE_INCREMENT) {
-			changeRateAtScore = Player.FIREWORK_CHANGE_RATE_INCREMENT;
+		if (Player.LIVES == 0 && GameTracker.GAME_IN_PROGRESS) {
+			GameTracker.SHOW_START_BUTTON = true;
+			GameTracker.GAME_IN_PROGRESS = false;
+			
+			// Reset change rate increment when the game is over
+			if (changeRateAtScore != Player.FIREWORK_CHANGE_RATE_INCREMENT) {
+				changeRateAtScore = Player.FIREWORK_CHANGE_RATE_INCREMENT;
+			}
+			
+			if (GameTracker.SHOW_START_BUTTON) {
+				GameTracker.SHOW_START_BUTTON = false;
+				btnStart.addAction(Actions.sequence(
+	    				Actions.run(new Runnable() {
+							@Override
+							public void run() {
+								btnStart.setVisible(true);
+							}
+	    				}),
+	    				Actions.fadeIn(1F)));
+			}
 		}
+		
+		
 		
 		if (Player.SCORE == changeRateAtScore) {
 			GameTracker.SPEEDUP_FIREWORK_LABEL = true;
@@ -98,7 +162,7 @@ public class GameLogic {
 			if (deltaCounter > rate) {
 				deltaCounter = 0; // Cheap workaround to prevent stacked spawning. May lead to inaccuracy in spawning
 				
-				int padding = ((Resolution.GAME_WIDTH_CURRENT - Resolution.GAME_WIDTH_16_9) / 2) + 30;
+				int padding = ((Resolution.GAME_WIDTH_CURRENT - Resolution.GAME_WIDTH_16_9) / 2) + 20;
 				groupFireworks.addActor(new Firework(rand.nextInt(Resolution.GAME_WIDTH_CURRENT - padding * 2) + padding));
 			}
 		}

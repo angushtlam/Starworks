@@ -17,7 +17,7 @@ public class Firework extends Group {
 	private static Random rand = new Random();
 	
 	public static float FIREWORK_INTERVAL_IN_SEC = 0.75F; // How many sec will it take for another firework to spawn.
-	private static float MOVE_RATE_IN_SEC = 0.005F; // How many seconds will it take to move 1 pixel up;
+	private static float MOVE_RATE_IN_SEC = 0.0035F; // How many seconds will it take to move 1 pixel up;
 	private static int PARTICLE_EXPLOSION_AREA = 80;
 	private static int PARTICLE_AMT_MAX = 120;
 	private static int PARTICLE_AMT_MIN = 40;
@@ -38,11 +38,11 @@ public class Firework extends Group {
 		this.addActor(imgHead);
 
 		groupParticles = new Group();
-		float bloomScale = (rand.nextInt(10) + 5) / 10.0F;
+		float bloomScale = (rand.nextInt(10) + 7) / 10.0F;
 		Image imgBloom = new ImageMaker(Assets.FIREWORK_BLOOM,
 				-10,
 				-10).getImage();
-		imgBloom.setColor(rand.nextFloat(), 0.5F, rand.nextFloat(), 1.0F);
+		imgBloom.setColor(rand.nextFloat(), 0.6F, rand.nextFloat(), 1.0F);
 		imgBloom.setOrigin(Align.center);
 		imgBloom.setScale(bloomScale);
 		groupParticles.addActor(imgBloom);
