@@ -93,6 +93,7 @@ public class FireworkBehavior extends Actor {
 	// Handles what happens when the head of the firework is interacted with.
 	private InputListener getListener() {
 		InputListener il = new InputListener() {
+			@Override
 			public boolean touchDown(InputEvent evt, float x, float y, int pointer, int button) {
 				// If the firework is not active, do not respond..
 				if (!active) {
@@ -112,6 +113,7 @@ public class FireworkBehavior extends Actor {
 				return true;
 			}
 
+			@Override
 			public void touchUp(InputEvent evt, float x, float y, int pointer, int button) {
 				return; // Nothing to do.
 			}

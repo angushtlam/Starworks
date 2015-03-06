@@ -68,11 +68,13 @@ public class GameLogic {
 		
 		btnStart = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.UI_START)));
 		InputListener lsnNewGame = new InputListener() {
-		    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+		    @Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 		        return true;
 		    }
 
-		    public void touchUp(InputEvent evt, float x, float y, int pointer, int button) {
+		    @Override
+			public void touchUp(InputEvent evt, float x, float y, int pointer, int button) {
 		    	// Make sure the cursor is still within the button.
 		    	if (x > 0 && x < btnStart.getWidth() && y > 0 && y < btnStart.getHeight()) {
 		    		btnStart.getParent().getParent().getParent().addAction(Actions.sequence(
