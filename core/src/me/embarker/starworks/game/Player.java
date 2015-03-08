@@ -38,6 +38,6 @@ public class Player {
 	
 	public static void update() {
 		HIGH_SCORE = pref.getInteger("highscore");
-		PLAY_SFX = pref.getBoolean("sfx");
+		PLAY_SFX = pref.getBoolean("sfx", true);
 	}
 }

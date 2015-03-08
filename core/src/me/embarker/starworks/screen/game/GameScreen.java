@@ -38,7 +38,7 @@ public class GameScreen extends ScreenAdapter {
 	
 	@Override
 	public void pause() {
-		Player.GAME_PAUSED = true; // Pause game if lost focus
+		Player.LIVES = 0; // kill em xd
 	}
 	
 	@Override
