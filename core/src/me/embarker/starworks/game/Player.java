@@ -10,6 +10,10 @@ public class Player {
 	public static int SCORE = 0;
 	public static int HIGH_SCORE = 0;
 	public static boolean HIGH_SCORE_SAVED = false;
+	
+	public static boolean PLAY_MUSIC = true;
+	public static boolean PLAY_SFX = true;
+	public static boolean GAME_PAUSED = false;
 
 	public static float FIREWORK_SPAWN_INCREASE_RATE = 0.325F; // Amount increased for firework spawn rates every second.
 	public static float FIREWORK_SPEED_INCREASE_RATE = 0.125F; // Speed increased for fireworks every second.
@@ -28,10 +32,12 @@ public class Player {
 	
 	public static void save() {
 		pref.putInteger("highscore", HIGH_SCORE);
+		pref.putBoolean("sfx", PLAY_SFX);
 		pref.flush(); // Save changes to file.
 	}
 	
 	public static void update() {
 		HIGH_SCORE = pref.getInteger("highscore");
+		PLAY_SFX = pref.getBoolean("sfx");
 	}
 }

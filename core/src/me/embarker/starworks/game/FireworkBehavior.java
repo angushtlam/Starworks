@@ -43,7 +43,9 @@ public class FireworkBehavior extends Actor {
 			fade = true;
 		}
 
-		deltaCounter =+ delta; // Keep track of seconds passed.
+		if (!Player.GAME_PAUSED) {
+			deltaCounter = deltaCounter + delta; // Keep track of seconds passed.	
+		}
 		
 		// Only move if the object can move and if there is a need to move. (So it doesn't try to move every tick)
 		if (move && deltaCounter > fw.getMoveSpeed()) {
@@ -58,7 +60,17 @@ public class FireworkBehavior extends Actor {
 			// Check if the head of the object has left the screen.
 			if (active && parent.getY() > IGNITION_SIZE) { // Point of reference for the firework trail is at the bottom.
 				Player.LIVES = Player.LIVES - 1; // Remove 1 life from player.
-				GameTracker.FIREWORK_SPEED_MODIFIER = Math.max(0.7F, GameTracker.FIREWORK_SPEED_MODIFIER - 1.0F); // Slow down speed if player missed.
+				GameTracker.FIREWORK_SPEED_MODIFIER = Math.max(0.75F,
+						GameTracker.FIREWORK_SPEED_MODIFIER - (Player.FIREWORK_SPEED_INCREASE_RATE * 2)); // Slow down speed if player missed.
+				
+				GameTracker.FIREWORK_SPAWN_MODIFIER = Math.max(0.75F,
+						GameTracker.FIREWORK_SPAWN_MODIFIER - Player.FIREWORK_SPAWN_INCREASE_RATE); // Slow down spawn if player missed.
+				
+				if (Player.PLAY_SFX) {
+					Assets.SOUND_MISS.play(1F);
+				}
+				
+				GameTracker.SLOWDOWN_FIREWORK_LABEL = true; // Alert user of slowdown.
 				
 				active = false; // Do not let object register for points.
 			}
@@ -96,7 +108,7 @@ public class FireworkBehavior extends Actor {
 			@Override
 			public boolean touchDown(InputEvent evt, float x, float y, int pointer, int button) {
 				// If the firework is not active, do not respond..
-				if (!active) {
+				if (!active || Player.GAME_PAUSED) {
 					return false;
 				}
 
@@ -104,6 +116,10 @@ public class FireworkBehavior extends Actor {
 				StarManager.genStar(tgt.getX() + 2, tgt.getY() + Assets.FIREWORK_TRAIL.getHeight()); // 2 pixel offset.
 				Player.SCORE = Player.SCORE + 1;
 
+				if (Player.PLAY_SFX) {
+					StarManager.playSound();
+				}
+				
 				// Change values.
 				active = false;
 				move = false;

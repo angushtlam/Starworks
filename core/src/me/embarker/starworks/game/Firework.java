@@ -64,6 +64,7 @@ public class Firework extends Group {
 		groupParticles.setVisible(false);
 		this.addActor(groupParticles);
 		
+		// Only 1 label per firework allowed.
 		if (GameTracker.FIRST_FIREWORK_LABEL) {
 			this.addActor(new LabelMaker("TAP ME", 0.5F, -20, Assets.FIREWORK_TRAIL.getHeight() + 2).getLabel());
 			GameTracker.FIRST_FIREWORK_LABEL = false;
@@ -71,6 +72,10 @@ public class Firework extends Group {
 			Label lbl = new LabelMaker("SPEED UP!", 0.5F, -30, Assets.FIREWORK_TRAIL.getHeight() + 2).getLabel();
 			this.addActor(lbl);
 			GameTracker.SPEEDUP_FIREWORK_LABEL = false;
+		} else if (GameTracker.SLOWDOWN_FIREWORK_LABEL) {
+			Label lbl = new LabelMaker("SLOW DOWN!", 0.5F, -35, Assets.FIREWORK_TRAIL.getHeight() + 2).getLabel();
+			this.addActor(lbl);
+			GameTracker.SLOWDOWN_FIREWORK_LABEL = false;
 		}
 		
 		this.addActor(new FireworkBehavior(this));

@@ -1,5 +1,7 @@
 package me.embarker.starworks.screen.game;
 
+import me.embarker.starworks.game.Player;
+
 import com.badlogic.gdx.ScreenAdapter;
 
 public class GameScreen extends ScreenAdapter {
@@ -32,5 +34,14 @@ public class GameScreen extends ScreenAdapter {
 	
 	@Override
 	public void hide() {
+	}
+	
+	@Override
+	public void pause() {
+		Player.GAME_PAUSED = true; // Pause game if lost focus
+	}
+	
+	@Override
+	public void resume() {
 	}
 }

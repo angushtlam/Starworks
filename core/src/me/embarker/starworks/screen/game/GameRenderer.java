@@ -35,12 +35,18 @@ public class GameRenderer {
 		tableUI.setFillParent(true);
 		//table.setDebug(true);
 		
+		Table tableStart = new Table();
+		//tableStart.setDebug(true);
+		tableStart.add(logic.btnStart).expandY().bottom();
+		tableUI.add(tableStart).expand().fill();
+		
+		tableUI.row();
+		
 		Table tableBtn = new Table();
 		//tableBtn.setDebug(true);
-		tableBtn.add(logic.btnStart);
-		tableUI.add(tableBtn).expandX().padBottom(50);
-		
-		stage.addActor(tableUI);
+		tableBtn.add(logic.btnSfx).size(55, 60).expand().bottom().left().padBottom(20).padLeft(30);
+		tableBtn.add(logic.btnPause).size(55, 60).expand().bottom().right().padBottom(20).padRight(30);
+		tableUI.add(tableBtn).expand().fill();
 		
 		// Render Stats
 		Table tableStat = new Table();
@@ -54,14 +60,18 @@ public class GameRenderer {
 		tableInfo.add(new LabelMaker("LIVES", 0.5F).getLabel()).expandX().padRight(20);
 		tableInfo.setColor(1F, 1F, 1F, 0.7F); // Change opacity of info
 		tableInfo.row();
-		
-		//tableInfo.setDebug(true);
 		tableInfo.add(logic.lblHighScore).width(80).expandX().padLeft(20);
 		tableInfo.add(logic.lblScore).width(200).expandX().padLeft(20).padRight(20);
 		tableInfo.add(logic.lblLives).width(80).expandX().padRight(20);
-		tableStat.add(tableInfo).expandX().fill().padTop(10);
+		tableStat.add(tableInfo).padTop(10);
+		
+		tableStat.row();
+		
+		tableStat.add(logic.lblPause).padTop(200);
 		
 		tableStat.top();
+		
+		stage.addActor(tableUI);
 		stage.addActor(tableStat);
 	}
 

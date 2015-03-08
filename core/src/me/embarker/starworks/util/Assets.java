@@ -1,6 +1,7 @@
 package me.embarker.starworks.util;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -19,6 +20,8 @@ public class Assets {
 	
 	public static Texture UI_START;
 	public static Texture UI_LIFE_ALIVE, UI_LIFE_DEAD;
+	
+	public static Sound SOUND_MISS, SOUND_BREAK_1, SOUND_BREAK_2, SOUND_BREAK_3;
 	
 	public static Skin SKIN;
 	
@@ -43,6 +46,11 @@ public class Assets {
 		UI_LIFE_ALIVE = getTexture(Gdx.files.internal("game/ui/life/alive.png"));
 		UI_LIFE_DEAD = getTexture(Gdx.files.internal("game/ui/life/dead.png"));
 		
+		SOUND_BREAK_1 = getSound(Gdx.files.internal("sound/break1.mp3"));
+		SOUND_BREAK_2 = getSound(Gdx.files.internal("sound/break2.mp3"));
+		SOUND_BREAK_3 = getSound(Gdx.files.internal("sound/break3.mp3"));
+		SOUND_MISS = getSound(Gdx.files.internal("sound/miss.mp3"));
+		
 		SKIN = new Skin(Gdx.files.internal("ui/uiskin.json"));
 		
 	}
@@ -52,6 +60,11 @@ public class Assets {
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Nearest); // Change scaling so textures resize properly.
 		
 		return texture;
+	}
+	
+	private static Sound getSound(FileHandle handle) {
+		Sound sound = Gdx.audio.newSound(handle);
+		return sound;
 	}
 	
 }
