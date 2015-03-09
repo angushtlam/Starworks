@@ -2,6 +2,7 @@ package me.embarker.starworks.game;
 
 import java.util.Random;
 
+import me.embarker.starworks.tracker.GameTracker;
 import me.embarker.starworks.util.Assets;
 import me.embarker.starworks.util.ImageMaker;
 import me.embarker.starworks.util.LabelMaker;
@@ -9,6 +10,7 @@ import me.embarker.starworks.util.Resolution;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -27,7 +29,8 @@ public class Firework extends Group {
 	private Group groupParticles;
 	
 	public Firework(int x) {
-		Image imgTrail = new Image(FireworkRender.getRandomTrail());
+		Image imgTrail = new Image(Assets.FIREWORK_TRAIL);
+		imgTrail.setTouchable(Touchable.disabled);
 		this.addActor(imgTrail);
 		
 		Image imgHead = new Image(Assets.FIREWORK_HEAD);
@@ -35,6 +38,7 @@ public class Firework extends Group {
 		imgHead.setPosition(
 				0 - Assets.FIREWORK_HEAD.getWidth() / 2 + Assets.FIREWORK_TRAIL.getWidth() / 2,
 				0 - Assets.FIREWORK_HEAD.getHeight() / 2 + Assets.FIREWORK_TRAIL.getHeight());
+		imgHead.setTouchable(Touchable.disabled);
 		this.addActor(imgHead);
 
 		groupParticles = new Group();
@@ -60,22 +64,30 @@ public class Firework extends Group {
 			groupParticles.addActor(partImg);
 			
 		}
-		
+
+		groupParticles.setTouchable(Touchable.disabled);
 		groupParticles.setVisible(false);
 		this.addActor(groupParticles);
 		
 		// Only 1 label per firework allowed.
 		if (GameTracker.FIRST_FIREWORK_LABEL) {
-			this.addActor(new LabelMaker("TAP ME", 0.5F, -20, Assets.FIREWORK_TRAIL.getHeight() + 2).getLabel());
+			Label lbl = new LabelMaker("TAP ME!", 0.5F, -20, Assets.FIREWORK_TRAIL.getHeight() + 2).getLabel();
+			lbl.setTouchable(Touchable.disabled);
+			this.addActor(lbl);
 			GameTracker.FIRST_FIREWORK_LABEL = false;
+			
 		} else if (GameTracker.SPEEDUP_FIREWORK_LABEL) {
 			Label lbl = new LabelMaker("SPEED UP!", 0.5F, -30, Assets.FIREWORK_TRAIL.getHeight() + 2).getLabel();
+			lbl.setTouchable(Touchable.disabled);
 			this.addActor(lbl);
 			GameTracker.SPEEDUP_FIREWORK_LABEL = false;
+			
 		} else if (GameTracker.SLOWDOWN_FIREWORK_LABEL) {
 			Label lbl = new LabelMaker("SLOW DOWN!", 0.5F, -35, Assets.FIREWORK_TRAIL.getHeight() + 2).getLabel();
+			lbl.setTouchable(Touchable.disabled);
 			this.addActor(lbl);
 			GameTracker.SLOWDOWN_FIREWORK_LABEL = false;
+			
 		}
 		
 		this.addActor(new FireworkBehavior(this));

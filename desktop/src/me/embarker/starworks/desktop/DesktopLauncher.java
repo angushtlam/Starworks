@@ -7,7 +7,7 @@ import me.embarker.starworks.Starworks;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.width = 768;
+		cfg.width = 576;
 		cfg.height = 768;
 		new LwjglApplication(new Starworks(), cfg);
 	}

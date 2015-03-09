@@ -1,6 +1,9 @@
 package me.embarker.starworks.game;
 
 import me.embarker.starworks.render.StarManager;
+import me.embarker.starworks.tracker.GameTracker;
+import me.embarker.starworks.tracker.Player;
+import me.embarker.starworks.tracker.SoundEffect;
 import me.embarker.starworks.util.Assets;
 
 import com.badlogic.gdx.graphics.Color;
@@ -61,10 +64,10 @@ public class FireworkBehavior extends Actor {
 			if (active && parent.getY() > IGNITION_SIZE) { // Point of reference for the firework trail is at the bottom.
 				Player.LIVES = Player.LIVES - 1; // Remove 1 life from player.
 				GameTracker.FIREWORK_SPEED_MODIFIER = Math.max(0.75F,
-						GameTracker.FIREWORK_SPEED_MODIFIER - (Player.FIREWORK_SPEED_INCREASE_RATE * 2)); // Slow down speed if player missed.
+						GameTracker.FIREWORK_SPEED_MODIFIER - (Player.FIREWORK_SPEED_INCREASE_RATE * 3)); // Slow down speed if player missed.
 				
 				GameTracker.FIREWORK_SPAWN_MODIFIER = Math.max(0.75F,
-						GameTracker.FIREWORK_SPAWN_MODIFIER - Player.FIREWORK_SPAWN_INCREASE_RATE); // Slow down spawn if player missed.
+						GameTracker.FIREWORK_SPAWN_MODIFIER - (Player.FIREWORK_SPAWN_INCREASE_RATE / 3)); // Slow down spawn if player missed.
 				
 				if (Player.PLAY_SFX) {
 					Assets.SOUND_MISS.play(1F);
@@ -117,7 +120,7 @@ public class FireworkBehavior extends Actor {
 				Player.SCORE = Player.SCORE + 1;
 
 				if (Player.PLAY_SFX) {
-					StarManager.playSound();
+					SoundEffect.playStarSound();
 				}
 				
 				// Change values.

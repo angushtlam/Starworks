@@ -1,18 +1,20 @@
 package me.embarker.starworks.screen.game;
 
-import me.embarker.starworks.game.Player;
+import me.embarker.starworks.tracker.Player;
 
 import com.badlogic.gdx.ScreenAdapter;
 
 public class GameScreen extends ScreenAdapter {
 	private GameLogic logic;
+	private GameUI ui;
 	public GameRenderer renderer;
 	
 	// Ran when object is initialised.
 	public GameScreen() {
 		// Make logic and renderer and set them to a private variable.
-		logic = new GameLogic();
-		renderer = new GameRenderer(logic);
+		ui = new GameUI();
+		logic = new GameLogic(ui);
+		renderer = new GameRenderer(logic, ui);
 		
 	}
 	

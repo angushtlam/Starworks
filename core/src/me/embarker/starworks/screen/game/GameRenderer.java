@@ -16,15 +16,16 @@ public class GameRenderer {
 	private Viewport viewport;
 	public Stage stage;
 	
-	public GameRenderer(GameLogic logic) {
+	public GameRenderer(GameLogic logic, GameUI ui) {
 		viewport = new ExtendViewport(
 				Resolution.GAME_WIDTH_16_9, Resolution.GAME_HEIGHT,
 				Resolution.GAME_WIDTH_1_1, Resolution.GAME_HEIGHT);
 
 		stage = new Stage();
 		stage.setViewport(viewport);
-
+		
 		stage.addActor(logic.bg);
+		
 		stage.addActor(logic.groupStars);
 		stage.addActor(logic.groupFireworks);
 		stage.addActor(new ImageMaker(Assets.GAME_ATMOS, 0, 0).getImage());
@@ -37,15 +38,15 @@ public class GameRenderer {
 		
 		Table tableStart = new Table();
 		//tableStart.setDebug(true);
-		tableStart.add(logic.btnStart).expandY().bottom();
+		tableStart.add(ui.btnStart).expandY().bottom();
 		tableUI.add(tableStart).expand().fill();
 		
 		tableUI.row();
 		
 		Table tableBtn = new Table();
 		//tableBtn.setDebug(true);
-		tableBtn.add(logic.btnSfx).size(55, 60).expand().bottom().left().padBottom(20).padLeft(30);
-		tableBtn.add(logic.btnPause).size(55, 60).expand().bottom().right().padBottom(20).padRight(30);
+		tableBtn.add(ui.btnOptions).size(60, 60).expand().bottom().left().padBottom(20).padLeft(30);
+		tableBtn.add(ui.btnPause).size(60, 60).expand().bottom().right().padBottom(20).padRight(30);
 		tableUI.add(tableBtn).expand().fill();
 		
 		// Render Stats
@@ -73,6 +74,9 @@ public class GameRenderer {
 		
 		stage.addActor(tableUI);
 		stage.addActor(tableStat);
+		
+		stage.addActor(logic.groupOptions);
+		
 	}
 
 	public void show() {
@@ -91,7 +95,6 @@ public class GameRenderer {
 	public void resize(int width, int height) {
 		// Updates the viewport to the screen, then centers the camera.
 		viewport.update(width, height, true);
-		
 		Resolution.GAME_WIDTH_CURRENT = (int) viewport.getCamera().viewportWidth;
 	}
 

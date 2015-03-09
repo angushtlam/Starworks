@@ -57,18 +57,4 @@ public class StarManager {
 	public static void clear() {
 		group.clear();
 	}
-	
-	public static void playSound() {
-		switch(1 + rand.nextInt(3)) {
-			case 1:
-				Assets.SOUND_BREAK_1.play(0.5F, 1.5F, 1F);
-				break;
-			case 2:
-				Assets.SOUND_BREAK_2.play(0.5F, 1.5F, 1F);
-				break;
-			case 3:
-				Assets.SOUND_BREAK_3.play(0.5F, 1.5F, 1F);
-				break;
-		}
-	}
 }
